@@ -1,0 +1,5 @@
+name: Bancho
+main: bancho.BanchoPlugin
+version: 1.0-DEV
+author: LewisTehMinerz
+description: The heart of your server.
