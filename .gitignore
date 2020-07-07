@@ -121,3 +121,5 @@ hs_err_pid*
 
 # built files
 build/
+# gradle
+.gradle/
