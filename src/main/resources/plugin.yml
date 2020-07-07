@@ -3,3 +3,4 @@ main: bancho.BanchoPlugin
 version: ${VERSION}
 author: LewisTehMinerz
 description: The heart of your server.
+api-version: 1.13

@@ -13,12 +13,15 @@ repositories {
     mavenCentral()
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://oss.sonatype.org/content/repositories/snapshots")
+    maven("https://raw.githubusercontent.com/JorelAli/1.13-Command-API/mvn-repo/1.13CommandAPI/")
+    maven("https://repo.codemc.org/repository/maven-public/")
 }
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("com.bertramlabs.plugins:hcl4j:0.2.0")
-    compileOnly("org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT")
+    implementation("dev.jorel:commandapi-core:3.2")
+    compileOnly("org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT")
 }
 
 tasks.withType<ProcessResources> {
@@ -37,6 +40,11 @@ tasks.withType<ShadowJar> {
     relocate("org.intellij", "bancho.lib.intellij")
     relocate("org.apache", "bancho.lib.apache")
     relocate("com.bertramlabs.plugins.hcl4j", "bancho.lib.hcl4j")
+    // NOTE: This is completely unsupported by CommandAPI. Just don't do this. Ever.
+    relocate("dev.jorel.commandapi", "bancho.lib.commandapi")
+    relocate("javassist", "bancho.lib.javassist")
+    // Multiple libraries in this package
+    relocate("de.tr7zw", "bancho.lib")
 }
 
 tasks.withType<KotlinCompile> {
