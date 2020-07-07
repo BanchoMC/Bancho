@@ -1,6 +1,8 @@
 # Bancho
 The heart of your server.
 
-| English | test |
-| ------- | ---- |
-| a       |      |
+<table>
+  <tr>
+    <td><a href="locales/en.hcl">English</a></td>
+  </tr>
+</table>
