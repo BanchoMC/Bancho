@@ -21,6 +21,8 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("com.bertramlabs.plugins:hcl4j:0.2.0")
     implementation("dev.jorel:commandapi-core:3.2")
+    implementation("com.jayway.jsonpath:json-path:2.4.0")
+    implementation("org.slf4j:slf4j-nop:1.7.30")
     compileOnly("org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT")
 }
 
@@ -39,12 +41,15 @@ tasks.withType<ShadowJar> {
     relocate("org.jetbrains", "bancho.lib.jetbrains")
     relocate("org.intellij", "bancho.lib.intellij")
     relocate("org.apache", "bancho.lib.apache")
-    relocate("com.bertramlabs.plugins.hcl4j", "bancho.lib.hcl4j")
+    relocate("com.bertramlabs", "bancho.lib.bertramlabs")
+    relocate("com.jayway", "bancho.lib.jayway")
     // NOTE: This is completely unsupported by CommandAPI. Just don't do this. Ever.
-    relocate("dev.jorel.commandapi", "bancho.lib.commandapi")
+    relocate("dev.jorel", "bancho.lib.jorel")
     relocate("javassist", "bancho.lib.javassist")
-    // Multiple libraries in this package
-    relocate("de.tr7zw", "bancho.lib")
+    relocate("org.slf4j", "bancho.lib.slf4j")
+    relocate("org.objectweb", "bancho.lib.objectweb")
+    relocate("de.tr7zw", "bancho.lib.tr7zw")
+    relocate("net.minidev", "bancho.lib.minidev")
 
     // Remove other config.yml
     exclude("config.yml")

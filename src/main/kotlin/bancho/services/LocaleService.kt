@@ -1,9 +1,9 @@
 package bancho.services
 
 import bancho.BanchoPlugin
-import com.google.gson.JsonElement
-import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.jayway.jsonpath.JsonPath
+import com.jayway.jsonpath.PathNotFoundException
 import org.bukkit.ChatColor
 import java.io.BufferedReader
 import java.io.File
@@ -14,11 +14,14 @@ import java.util.stream.Collectors
 
 class LocaleService : Service() {
     private val parser = JsonParser()
-    private lateinit var locale: JsonElement
-    private var localeFromFile: JsonElement? = null
+    private lateinit var locale: String
+    private var localeFromFile: String? = null
 
-    fun getStringPrefixed(path: String): String = BanchoPlugin.configuration.get(
-        "core.prefix", "&d&lBancho // &r"
+    fun getStringPrefixed(path: String): String = ChatColor.translateAlternateColorCodes(
+        '&',
+        BanchoPlugin.configuration.get(
+            "core.prefix", "&d&lBancho // &r"
+        )
     ) + getString(path)
 
     fun getString(path: String): String = ChatColor.translateAlternateColorCodes(
@@ -38,33 +41,27 @@ class LocaleService : Service() {
             error("Failed to get locale from jar.")
         }
 
-        locale = parser.parse(resourceContent)
+        locale = resourceContent
 
         val localeFile = File(BanchoPlugin.instance.dataFolder, "locale.json")
         if (localeFile.exists())
-            localeFromFile = parser.parse(localeFile.readText(Charset.defaultCharset()))
+            localeFromFile = localeFile.readText(Charset.defaultCharset())
     }
 
     private fun getStringByPath(path: String, forceBuiltInLocale: Boolean = false): String {
-        val splitPath = path.split('.')
-        var currentJsonElement = localeFromFile ?: locale
-        if (forceBuiltInLocale) currentJsonElement = locale
+        // use built in else try to use file and fall back to built in otherwise
+        val localeToUse = if (forceBuiltInLocale) locale else localeFromFile ?: locale
 
-        splitPath.forEach {
-            when {
-                currentJsonElement.isJsonObject -> currentJsonElement = (currentJsonElement as JsonObject).get(it)
-                currentJsonElement.isJsonPrimitive -> return currentJsonElement.asString
+        try {
+            return JsonPath.read(localeToUse, "$.$path") as String
+        } catch (e: Exception) {
+            if (localeFromFile != null && !forceBuiltInLocale)
+                return getStringByPath(path, true)
 
-                else -> {
-                    if (localeFromFile != null && !forceBuiltInLocale)
-                        return getStringByPath(path, true)
-                }
-            }
+            BanchoPlugin.instance.logger.warning(
+                "LocaleService: Attempted to get `$path` and hit a dead end, returning path."
+            )
+            return path
         }
-
-        BanchoPlugin.instance.logger.warning(
-            "LocaleService: Tried to resolve $path and hit a dead end, returning path."
-        )
-        return path
     }
 }

@@ -30,6 +30,7 @@ class BanchoPlugin : JavaPlugin() {
         server.consoleSender.sendMessage(
             serviceProvider.get<LocaleService>().getStringPrefixed("core.init.success")
         )
+
         if (configuration.get("firstRun", true)) {
             server.consoleSender.sendMessage(
                 serviceProvider.get<LocaleService>().getStringPrefixed("core.init.firstRun")
