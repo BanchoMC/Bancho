@@ -9,7 +9,7 @@ import java.io.InputStreamReader
 import java.nio.file.Paths
 import java.util.stream.Collectors
 
-class ConfigService: Service() {
+class ConfigService : Service() {
     private val parser = HCLParser()
 
     fun load(file: File): Config {
@@ -17,9 +17,13 @@ class ConfigService: Service() {
         val resourcePath = base.relativize(Paths.get(file.path))
 
         val resourceContent = try {
-            BufferedReader(InputStreamReader(BanchoPlugin.instance.getResource(
-                resourcePath.toString().replace('\\', '/') // in case of windows
-            ))).lines().collect(Collectors.joining("\n"))
+            BufferedReader(
+                InputStreamReader(
+                    BanchoPlugin.instance.getResource(
+                        resourcePath.toString().replace('\\', '/') // in case of windows
+                    )
+                )
+            ).lines().collect(Collectors.joining("\n"))
         } catch (e: FileNotFoundException) {
             error("Attempted to get invalid configuration file $resourcePath (not in jar)")
         }
@@ -59,7 +63,8 @@ class ConfigService: Service() {
                         // invalid type, just return the default value and warn
                         else -> {
                             BanchoPlugin.instance.logger.warning(
-                                "$file: Attempted to get `$path` but got wrong type (expected ${T::class.simpleName}, got ${currentVal::class.simpleName}), returning default")
+                                "$file: Attempted to get `$path` but got wrong type (expected ${T::class.simpleName}, got ${currentVal::class.simpleName}), returning default"
+                            )
                             return default
                         }
                     }
@@ -67,7 +72,8 @@ class ConfigService: Service() {
             }
 
             BanchoPlugin.instance.logger.warning(
-                "$file: Attempted to get `$path` but hit a dead end, returning default (did you remove a config option?)")
+                "$file: Attempted to get `$path` but hit a dead end, returning default (did you remove a config option?)"
+            )
             return default
         }
     }

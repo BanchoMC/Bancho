@@ -12,21 +12,28 @@ import java.io.InputStreamReader
 import java.nio.charset.Charset
 import java.util.stream.Collectors
 
-class LocaleService: Service() {
+class LocaleService : Service() {
     private val parser = JsonParser()
     private lateinit var locale: JsonElement
     private var localeFromFile: JsonElement? = null
 
     fun getStringPrefixed(path: String): String = BanchoPlugin.configuration.get(
-        "core.prefix", "&d&lBancho // &r") + getString(path)
+        "core.prefix", "&d&lBancho // &r"
+    ) + getString(path)
+
     fun getString(path: String): String = ChatColor.translateAlternateColorCodes(
-        '&', getStringByPath(path))
+        '&', getStringByPath(path)
+    )
 
     fun reloadLocale() {
         val resourceContent = try {
-            BufferedReader(InputStreamReader(BanchoPlugin.instance.getResource(
-                "locale.json"
-            ))).lines().collect(Collectors.joining("\n"))
+            BufferedReader(
+                InputStreamReader(
+                    BanchoPlugin.instance.getResource(
+                        "locale.json"
+                    )
+                )
+            ).lines().collect(Collectors.joining("\n"))
         } catch (e: FileNotFoundException) {
             error("Failed to get locale from jar.")
         }
@@ -56,7 +63,8 @@ class LocaleService: Service() {
         }
 
         BanchoPlugin.instance.logger.warning(
-            "LocaleService: Tried to resolve $path and hit a dead end, returning path.")
+            "LocaleService: Tried to resolve $path and hit a dead end, returning path."
+        )
         return path
     }
 }

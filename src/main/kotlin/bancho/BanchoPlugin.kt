@@ -8,7 +8,7 @@ import dev.jorel.commandapi.executors.CommandExecutor
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
-class BanchoPlugin: JavaPlugin() {
+class BanchoPlugin : JavaPlugin() {
     companion object {
         lateinit var instance: BanchoPlugin
         lateinit var configuration: ConfigService.Config
@@ -28,10 +28,12 @@ class BanchoPlugin: JavaPlugin() {
         registerRootCommand()
 
         server.consoleSender.sendMessage(
-            serviceProvider.get<LocaleService>().getStringPrefixed("core.init.success"))
+            serviceProvider.get<LocaleService>().getStringPrefixed("core.init.success")
+        )
         if (configuration.get("firstRun", true)) {
             server.consoleSender.sendMessage(
-                serviceProvider.get<LocaleService>().getStringPrefixed("core.init.firstRun"))
+                serviceProvider.get<LocaleService>().getStringPrefixed("core.init.firstRun")
+            )
         }
     }
 
