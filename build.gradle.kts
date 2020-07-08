@@ -1,5 +1,5 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.3.72"
@@ -45,6 +45,9 @@ tasks.withType<ShadowJar> {
     relocate("javassist", "bancho.lib.javassist")
     // Multiple libraries in this package
     relocate("de.tr7zw", "bancho.lib")
+
+    // Remove other config.yml
+    exclude("config.yml")
 }
 
 tasks.withType<KotlinCompile> {

@@ -2,8 +2,10 @@ package bancho.services
 
 import bancho.BanchoPlugin
 import com.bertramlabs.plugins.hcl4j.HCLParser
-import org.bukkit.ChatColor
-import java.io.*
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.InputStreamReader
 import java.nio.file.Paths
 import java.util.stream.Collectors
 

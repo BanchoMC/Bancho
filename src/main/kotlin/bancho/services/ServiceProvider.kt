@@ -1,7 +1,5 @@
 package bancho.services
 
-import bancho.BanchoPlugin
-
 class ServiceProvider() {
     val services = listOf(
         ConfigService(),

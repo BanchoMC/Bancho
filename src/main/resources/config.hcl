@@ -19,6 +19,8 @@
 // Indicates that this instance of Bancho has not yet been configured.
 firstRun = true
 
+// The prefix used on most of Bancho's messages.
+prefix = "&d&lBancho // &r"
 // Disables specific commands from being registered into the global space (such as /gamemode). Please note that /bancho
 // cannot be disabled at all and attempting to do so will throw a warning.
 disableCommands = []
