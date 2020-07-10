@@ -20,6 +20,7 @@ class BanchoPlugin : JavaPlugin() {
     override fun onEnable() {
         instance = this
         val configService = serviceProvider.get<ConfigService>()
+        val issueList = ArrayList<String>()
 
         configuration = configService.load(File(dataFolder, "config.hcl"))
         locale = serviceProvider.get()
@@ -27,13 +28,30 @@ class BanchoPlugin : JavaPlugin() {
 
         registerRootCommand()
 
-        server.consoleSender.sendMessage(
-            serviceProvider.get<LocaleService>().getStringPrefixed("core.init.success")
-        )
+        // reload guard
+        if (System.getProperty("bancho:reloadGuard", "n") == "y") {
+            issueList.add(locale.getString("core.init.issues.reload"))
+        } else {
+            System.setProperty("bancho:reloadGuard", "y")
+        }
+
+        if (issueList.size > 0) {
+            server.consoleSender.sendMessage(
+                locale.getStringPrefixed("core.init.issue")
+            )
+
+            issueList.forEach {
+                server.consoleSender.sendMessage("&c- $it")
+            }
+        } else {
+            server.consoleSender.sendMessage(
+                locale.getStringPrefixed("core.init.success")
+            )
+        }
 
         if (configuration.get("firstRun", true)) {
             server.consoleSender.sendMessage(
-                serviceProvider.get<LocaleService>().getStringPrefixed("core.init.firstRun")
+                locale.getStringPrefixed("core.init.firstRun")
             )
         }
     }

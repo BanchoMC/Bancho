@@ -2,8 +2,12 @@
   "core": {
     "version": "Bancho %s",
     "init": {
-      "success": "Bancho has initialized successfully!",
-      "firstRun": "Since this appears to be your first run of Bancho, you need to go through the config file. This may seem like a tedious process, and that's because it is! However, it is a necessary evil to make sure that you only want what you want on your server. All components are disabled by default to prevent conflicts with other plugins."
+      "firstRun": "Since this appears to be your first run of Bancho, you need to go through the config file. This may seem like a tedious process, and that's because it is! However, it is a necessary evil to make sure that you only want what you want on your server. All components are disabled by default to prevent conflicts with other plugins. Make sure to restart (not reload) your server after configuration.",
+      "success": "&aBancho has initialized successfully!",
+      "issue": "&cBancho has initialized, but encountered the following issues when starting:",
+      "issues": {
+        "reload": "Bancho has detected a reload. This WILL cause problems down the line, hence why Bancho does not provide its own reload command at the current time. Please restart your server."
+      }
     }
   }
 }
