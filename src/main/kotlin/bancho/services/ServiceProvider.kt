@@ -1,10 +1,10 @@
 package bancho.services
 
-class ServiceProvider() {
-    val services = listOf(
+import bancho.util.Provider
+
+class ServiceProvider: Provider<Service>() {
+    override val toProvide = listOf(
         ConfigService(),
         LocaleService()
     )
-
-    inline fun <reified T : Service> get(): T = services.find { it is T } as T
 }

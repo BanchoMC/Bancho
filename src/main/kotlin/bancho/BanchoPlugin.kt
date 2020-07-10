@@ -5,6 +5,7 @@ import bancho.services.LocaleService
 import bancho.services.ServiceProvider
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.executors.CommandExecutor
+import org.bukkit.ChatColor
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 
@@ -26,7 +27,7 @@ class BanchoPlugin : JavaPlugin() {
         locale = serviceProvider.get()
         locale.reloadLocale()
 
-        registerRootCommand()
+        //registerRootCommand()
 
         // reload guard
         if (System.getProperty("bancho:reloadGuard", "n") == "y") {
@@ -41,7 +42,9 @@ class BanchoPlugin : JavaPlugin() {
             )
 
             issueList.forEach {
-                server.consoleSender.sendMessage("&c- $it")
+                server.consoleSender.sendMessage(
+                    ChatColor.translateAlternateColorCodes('&', "&c- $it")
+                )
             }
         } else {
             server.consoleSender.sendMessage(
