@@ -9,7 +9,7 @@ Are you an aspiring translator? This is the guide for you!
 ## Translating
 This is a short set of guidelines on how to translate.
 - Variables must be left as is. Things like `%s` should be left where they are in the sentence.
-- Color codes should be left as-is.
+- Color codes should be left as is.
 - The word `Bancho` must be left as is, even if it's translatable.
 - If you are confused, just ask!
 
