@@ -3,7 +3,6 @@ package bancho.services
 import bancho.BanchoPlugin
 import com.google.gson.JsonParser
 import com.jayway.jsonpath.JsonPath
-import com.jayway.jsonpath.PathNotFoundException
 import org.bukkit.ChatColor
 import java.io.BufferedReader
 import java.io.File

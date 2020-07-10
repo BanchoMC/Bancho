@@ -15,6 +15,7 @@ repositories {
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://raw.githubusercontent.com/JorelAli/1.13-Command-API/mvn-repo/1.13CommandAPI/")
     maven("https://repo.codemc.org/repository/maven-public/")
+    maven("https://jitpack.io/")
 }
 
 dependencies {
@@ -24,6 +25,7 @@ dependencies {
     implementation("com.jayway.jsonpath:json-path:2.4.0")
     implementation("org.slf4j:slf4j-nop:1.7.30")
     compileOnly("org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT")
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
 }
 
 tasks.withType<ProcessResources> {

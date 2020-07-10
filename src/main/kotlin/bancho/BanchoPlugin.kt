@@ -1,8 +1,12 @@
 package bancho
 
+import bancho.components.ComponentProvider
 import bancho.services.ConfigService
 import bancho.services.LocaleService
 import bancho.services.ServiceProvider
+import bancho.util.interaction.NoOpInteraction
+import bancho.util.interaction.vault.IVaultInteraction
+import bancho.util.interaction.vault.VaultInteraction
 import dev.jorel.commandapi.CommandAPICommand
 import dev.jorel.commandapi.executors.CommandExecutor
 import org.bukkit.ChatColor
@@ -14,9 +18,11 @@ class BanchoPlugin : JavaPlugin() {
         lateinit var instance: BanchoPlugin
         lateinit var configuration: ConfigService.Config
         lateinit var locale: LocaleService
+        var vaultInteraction: IVaultInteraction = NoOpInteraction()
     }
 
-    val serviceProvider = ServiceProvider()
+    private val serviceProvider = ServiceProvider()
+    private val componentProvider = ComponentProvider()
 
     override fun onEnable() {
         instance = this
@@ -27,7 +33,18 @@ class BanchoPlugin : JavaPlugin() {
         locale = serviceProvider.get()
         locale.reloadLocale()
 
-        //registerRootCommand()
+        if (server.pluginManager.isPluginEnabled("Vault")) {
+            server.consoleSender.sendMessage(
+                String.format(locale.getStringPrefixed("core.init.pluginFound"), "Vault")
+            )
+            vaultInteraction = VaultInteraction()
+        }
+
+        registerRootCommand()
+
+        componentProvider.toProvide.forEach {
+            it.enableComponent()
+        }
 
         // reload guard
         if (System.getProperty("bancho:reloadGuard", "n") == "y") {
